@@ -134,6 +134,199 @@
         transform: scale(1.05) !important;
         box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
     }
+    
+    /* ===== Featured Projects Section ===== */
+    .sonar-projects {
+        position: relative;
+        padding: 80px 0;
+        background: linear-gradient(135deg, rgba(30, 30, 50, 0.5) 0%, rgba(15, 25, 45, 0.5) 100%);
+        overflow: hidden;
+    }
+    
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 32px;
+        margin-top: 60px;
+    }
+    
+    .project-card {
+        background: rgba(20, 28, 40, 0.6);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        backdrop-filter: blur(10px);
+    }
+    
+    .project-card:hover {
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        transform: translateY(-8px);
+    }
+    
+    .project-image-wrapper {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+    
+    .project-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    
+    .project-card:hover .project-image {
+        transform: scale(1.1);
+    }
+    
+    .project-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .project-card:hover .project-overlay {
+        opacity: 1;
+    }
+    
+    .project-content {
+        padding: 24px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .project-title {
+        font-family: "FK Grotesk Neue Medium", "Inter", system-ui, -apple-system, sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 0;
+        line-height: 1.3;
+    }
+    
+    .project-featured-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+        border: 1px solid rgba(59, 130, 246, 0.4);
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #3b82f6;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    .project-featured-badge i {
+        font-size: 10px;
+    }
+    
+    .project-description {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.6;
+        margin-bottom: 16px;
+        flex-grow: 1;
+    }
+    
+    .project-tech-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .project-tech-tags .tech-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 16px;
+        font-size: 12px;
+        color: #3b82f6;
+        transition: all 0.2s ease;
+    }
+    
+    .project-tech-tags .tech-tag:hover {
+        background: rgba(59, 130, 246, 0.2);
+        border-color: rgba(59, 130, 246, 0.6);
+    }
+    
+    .demo-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        border: none;
+        border-radius: 8px;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+    
+    .demo-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    }
+    
+    .demo-btn i {
+        font-size: 12px;
+    }
+    
+    @media (max-width: 768px) {
+        .sonar-projects {
+            padding: 60px 0;
+        }
+        
+        .projects-grid {
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+        
+        .project-image-wrapper {
+            height: 200px;
+        }
+        
+        .project-content {
+            padding: 20px;
+        }
+        
+        .project-title {
+            font-size: 16px;
+        }
+    }
 </style>
 
 
@@ -248,6 +441,7 @@
                     <a class="nav-link active" href="#home">Home</a>
                     <a class="nav-link" href="#about">About</a>
                     <a class="nav-link" href="#skills">Skills</a>
+                    <a class="nav-link" href="#projects">Projects</a>
                     <a class="nav-link" href="#experience">Experience</a>
                    <!-- <a class="nav-link" href="#awards">Awards</a> -->
                     <!--<a class="nav-link" href="#certifications">Certifications</a> -->
@@ -1098,7 +1292,7 @@
                             <img src="https://share.google/vUcJpmGyovjLYMaSd" alt="Crammm logo" class="company-logo" width="48" height="48" loading="lazy">
                         </div>
                         <div class="experience-info">
-                            <h3>DevOps and site reliability engineer(SRE)</h3>
+                            <h3>Cloud & DevOps Engineer</h3>
                             <p class="company-name">Verisage.AI Pvt Ltd</p>
                             <p class="experience-duration">MAR 2025 - Present</p>
                         </div>
@@ -1556,6 +1750,207 @@
         </div>
     </section>  -->
 
+    <!-- Featured Projects Section -->
+    <section id="projects" class="sonar-section sonar-projects">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <span>Portfolio</span>
+                </div>
+                <h2 class="section-title">
+                    Featured<br>
+                    <span class="gradient-text">Projects</span>
+                </h2>
+                <p class="section-subtitle font-light">
+                    Showcasing innovative projects built with cloud-native technologies,<br>
+                    DevOps automation, and modern development practices.
+                </p>
+            </div>
+            
+            <div class="projects-grid">
+                <!-- Project Card 1 -->
+                <div class="project-card">
+                    <div class="project-image-wrapper">
+                        <img src="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+1" alt="Project 1" class="project-image" loading="lazy">
+                        <div class="project-overlay"></div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Your Project Title 1</h3>
+                            <div class="project-featured-badge">
+                                <i class="fas fa-star"></i>
+                                <span>Featured</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Brief description of your project. Highlight the key features, technologies used, and the impact it creates.
+                        </p>
+                        <div class="project-tech-tags">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">AWS</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">CI/CD</span>
+                        </div>
+                        <a href="https://your-project-url.com" target="_blank" rel="noopener" class="demo-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Live Demo</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="project-card">
+                    <div class="project-image-wrapper">
+                        <img src="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+2" alt="Project 2" class="project-image" loading="lazy">
+                        <div class="project-overlay"></div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Your Project Title 2</h3>
+                            <div class="project-featured-badge">
+                                <i class="fas fa-star"></i>
+                                <span>Featured</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Brief description of your project. Highlight the key features, technologies used, and the impact it creates.
+                        </p>
+                        <div class="project-tech-tags">
+                            <span class="tech-tag">Kubernetes</span>
+                            <span class="tech-tag">Go</span>
+                            <span class="tech-tag">Microservices</span>
+                            <span class="tech-tag">GCP</span>
+                        </div>
+                        <a href="https://your-project-url.com" target="_blank" rel="noopener" class="demo-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Live Demo</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="project-card">
+                    <div class="project-image-wrapper">
+                        <img src="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+3" alt="Project 3" class="project-image" loading="lazy">
+                        <div class="project-overlay"></div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Your Project Title 3</h3>
+                            <div class="project-featured-badge">
+                                <i class="fas fa-star"></i>
+                                <span>Featured</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Brief description of your project. Highlight the key features, technologies used, and the impact it creates.
+                        </p>
+                        <div class="project-tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Terraform</span>
+                            <span class="tech-tag">Azure</span>
+                            <span class="tech-tag">IaC</span>
+                        </div>
+                        <a href="https://your-project-url.com" target="_blank" rel="noopener" class="demo-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Live Demo</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 (Optional) -->
+                <div class="project-card">
+                    <div class="project-image-wrapper">
+                        <img src="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+4" alt="Project 4" class="project-image" loading="lazy">
+                        <div class="project-overlay"></div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Your Project Title 4</h3>
+                            <div class="project-featured-badge">
+                                <i class="fas fa-star"></i>
+                                <span>Featured</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Brief description of your project. Highlight the key features, technologies used, and the impact it creates.
+                        </p>
+                        <div class="project-tech-tags">
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Jenkins</span>
+                            <span class="tech-tag">Linux</span>
+                        </div>
+                        <a href="https://your-project-url.com" target="_blank" rel="noopener" class="demo-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Live Demo</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 5 (Optional) -->
+                <div class="project-card">
+                    <div class="project-image-wrapper">
+                        <img src="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+5" alt="Project 5" class="project-image" loading="lazy">
+                        <div class="project-overlay"></div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Your Project Title 5</h3>
+                            <div class="project-featured-badge">
+                                <i class="fas fa-star"></i>
+                                <span>Featured</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Brief description of your project. Highlight the key features, technologies used, and the impact it creates.
+                        </p>
+                        <div class="project-tech-tags">
+                            <span class="tech-tag">Ansible</span>
+                            <span class="tech-tag">Prometheus</span>
+                            <span class="tech-tag">Grafana</span>
+                            <span class="tech-tag">Observability</span>
+                        </div>
+                        <a href="https://your-project-url.com" target="_blank" rel="noopener" class="demo-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Live Demo</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 6 (Optional) -->
+                <div class="project-card">
+                    <div class="project-image-wrapper">
+                        <img src="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+6" alt="Project 6" class="project-image" loading="lazy">
+                        <div class="project-overlay"></div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Your Project Title 6</h3>
+                            <div class="project-featured-badge">
+                                <i class="fas fa-star"></i>
+                                <span>Featured</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Brief description of your project. Highlight the key features, technologies used, and the impact it creates.
+                        </p>
+                        <div class="project-tech-tags">
+                            <span class="tech-tag">Helm</span>
+                            <span class="tech-tag">ArgoCD</span>
+                            <span class="tech-tag">Kube</span>
+                            <span class="tech-tag">GitOps</span>
+                        </div>
+                        <a href="https://your-project-url.com" target="_blank" rel="noopener" class="demo-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Live Demo</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>    
+    
     <!-- Education Section -->
     <section id="education" class="sonar-section">
         <div class="container">
