@@ -18,21 +18,21 @@ window.projectCaseStudies = [
     }
   },
   {
-    id: 'ops-console',
-    title: 'Ops Console',
-    summary: 'A command center for operations teams to keep releases visible, controlled, and predictable.',
-    description: 'Internal operations dashboard for tracking releases, service health, and deployment status in real time.',
-    tags: ['Monitoring', 'Automation', 'Release Ops', 'SRE'],
+    id: 'CI/CD Pipeline — From Commit to Production',
+    title: 'CI/CD Pipeline — From Commit to Production',
+    summary: 'A solo-built pipeline that turned manual, error-prone deployments into an automated path from code commit to live containers.',
+    description: 'End-to-end CI/CD pipeline handling automated builds, container registry pushes, and reverse-proxy deployment for a company with no prior DevOps setup.',
+    tags: ['CI/CD', 'Docker', 'Jenkins', 'AWS', 'Nginx', 'Git', 'GitHub'],
     cardImage: 'https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Ops+Console',
     caseStudyImage: 'https://via.placeholder.com/800x450/0f172a/38bdf8?text=Ops+Console+Case+Study',
     caseStudy: {
-      overview: 'The case study centered on giving operations teams a single place to track releases, health, and deploy activity without switching tools.',
-      architecture: 'The architecture combined monitoring dashboards, deployment event streams, and alerting channels into a unified operational view.',
-      role: 'I designed the automation workflows, monitoring strategy, and deployment visibility for the console.',
-      flow: 'The workflow connected CI/CD events, health signals, and incident context so teams could respond faster and with better context.',
-      challenges: 'The biggest challenge was turning scattered signals into a simple and actionable operational view without adding noise.',
-      results: 'Teams reached faster incident resolution and better release awareness without extra manual overhead.',
-      stack: ['Kubernetes', 'Grafana', 'Prometheus', 'CI/CD', 'Python', 'Alerting']
+      overview: 'Before this project, the company had no centralized codebase and no automated deployment process — everything was manual. I built a full CI/CD pipeline from scratch: centralized version control, automated builds, containerized deployments, and a reverse proxy in front — all designed, built, and maintained solo.',
+      architecture: 'Code pushed to GitHub triggers Jenkins, which builds the frontend and backend independently and pushes both as Docker images to AWS ECR. Containers are deployed from those images and sit behind Nginx, which handles reverse-proxy routing to a single entry point.',
+      role: 'DevOps Engineer — sole owner of this project. No team, no handoffs. I made every decision on tooling, pipeline structure, and failure handling, and debugged every issue independently.',
+      flow: 'GitHub push → Jenkins build triggered → frontend and backend build in parallel → images pushed to ECR → containers deployed → Nginx routes traffic to the right service.',
+      challenges: 'Frontend and backend builds were blocking each other early on, so I split them into independent Jenkins stages. Securing ECR credentials, tagging images properly for safe rollbacks, and getting Nginx routing/CORS right between the two services were the other big ones — all solved through direct trial, error, and no one else to check my work against.',
+      results: 'Replaced a fully manual deployment process with a repeatable, automated pipeline — code merged to GitHub now reaches production without anyone touching a server by hand.',
+      stack: ['GitHub', 'Git', 'Jenkins', 'Docker', 'AWS ECR', 'Nginx', 'CI/CD', 'Aws EC2']
     }
   },
   {
