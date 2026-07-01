@@ -305,6 +305,137 @@
         font-size: 12px;
     }
     
+    .case-study-btn {
+        width: 100%;
+        border: none;
+        font-family: inherit;
+    }
+    
+    .case-study-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    
+    .case-study-modal.active {
+        display: flex;
+    }
+    
+    .case-study-modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(3, 8, 20, 0.82);
+        backdrop-filter: blur(8px);
+    }
+    
+    .case-study-modal-dialog {
+        position: relative;
+        width: min(980px, 100%);
+        max-height: 90vh;
+        overflow: auto;
+        background: linear-gradient(135deg, rgba(20, 28, 40, 0.98) 0%, rgba(10, 15, 25, 0.98) 100%);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        border-radius: 24px;
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.45);
+        padding: 28px;
+    }
+    
+    .case-study-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        border: none;
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    
+    .case-study-hero {
+        margin-bottom: 24px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .case-study-kicker {
+        display: inline-block;
+        margin: 0 0 8px;
+        font-size: 12px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: #60a5fa;
+        font-weight: 700;
+    }
+    
+    .case-study-hero h3 {
+        margin: 0 0 10px;
+        font-size: 28px;
+        color: #fff;
+    }
+    
+    .case-study-summary {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.75);
+        line-height: 1.7;
+    }
+    
+    .case-study-flow {
+        display: grid;
+        gap: 14px;
+    }
+    
+    .case-study-step {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 16px 18px;
+    }
+    
+    .case-study-step h4 {
+        margin: 0 0 8px;
+        color: #fff;
+        font-size: 18px;
+    }
+    
+    .case-study-step p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.72);
+        line-height: 1.6;
+    }
+    
+    .case-study-architecture img {
+        width: 100%;
+        border-radius: 12px;
+        margin-top: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .case-study-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+    }
+    
+    .case-study-stack span {
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(59, 130, 246, 0.14);
+        color: #93c5fd;
+        font-size: 12px;
+    }
+    
+    body.case-study-open {
+        overflow: hidden;
+    }
+    
     @media (max-width: 768px) {
         .sonar-projects {
             padding: 60px 0;
@@ -1779,7 +1910,7 @@
             
             <div class="projects-grid">
                 <!-- Project Card 1 -->
-                <div class="project-card">
+                <div class="project-card" data-project-title="crammm.com" data-project-summary="Built and delivered an AI-powered learning platform focused on improving learning efficiency through real-time collaboration, AI-generated summaries, and intelligent flashcard creation, powered by scalable cloud infrastructure and modern application delivery practices." data-project-overview="Delivered a modern learning experience with strong reliability, scalability, and AI-assisted workflows for students and educators." data-project-role="Led the cloud architecture, delivery automation, deployment strategy, and operational hardening for the platform." data-project-flow="Implemented a containerized, automated deployment pipeline with secure releases and observability to keep every update predictable." data-project-challenges="Balanced rapid feature delivery with uptime, security, and maintainability while supporting AI-backed functionality at scale." data-project-results="Improved deployment confidence, system reliability, and the overall product experience for end users." data-project-stack="AWS,Docker,CI/CD,IaC,Monitoring,Security,ECS,GIT" data-project-image="./req/img/crammm.com.png">
                     <div class="project-image-wrapper">
                         <img src="./req/img/crammm.com.png" alt="crammm.com" class="project-image" loading="lazy">
                         <div class="project-overlay"></div>
@@ -1805,15 +1936,15 @@
                             <span class="tech-tag">ECS</span>
                             <span class="tech-tag">Monitoring</span>
                         </div>
-                        <a href="https://crammm.com" target="_blank" rel="noopener" class="demo-btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Live Demo</span>
-                        </a>
+                        <button type="button" class="demo-btn case-study-btn">
+                            <i class="fas fa-book-open"></i>
+                            <span>Case Study</span>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Project Card 2 -->
-                <div class="project-card">
+                <div class="project-card" data-project-title="Your Project Title 2" data-project-summary="A cloud-native application built for scalability, resilience, and rapid feature delivery using modern DevOps practices." data-project-overview="Created a reliable platform architecture that supported continuous delivery and a strong user experience from day one." data-project-role="Designed the infrastructure and delivery workflows while improving operational visibility and release consistency." data-project-flow="Used container orchestration, automated pipelines, and environment controls to keep deployments consistent and secure." data-project-challenges="Reduced operational overhead while maintaining performance and supporting future growth." data-project-results="Improved release reliability and shortened time-to-market for new features." data-project-stack="Kubernetes,Go,Microservices,GCP,CI/CD,Monitoring" data-project-image="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+2">
                     <div class="project-image-wrapper">
                         <img src="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+2" alt="Project 2" class="project-image" loading="lazy">
                         <div class="project-overlay"></div>
@@ -1835,15 +1966,15 @@
                             <span class="tech-tag">Microservices</span>
                             <span class="tech-tag">GCP</span>
                         </div>
-                        <a href="https://your-project-url.com" target="_blank" rel="noopener" class="demo-btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Live Demo</span>
-                        </a>
+                        <button type="button" class="demo-btn case-study-btn">
+                            <i class="fas fa-book-open"></i>
+                            <span>Case Study</span>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Project Card 3 -->
-                <div class="project-card">
+                <div class="project-card" data-project-title="Your Project Title 3" data-project-summary="An infrastructure-focused solution designed to streamline deployments and improve platform governance across distributed services." data-project-overview="Built a structured delivery foundation that made operations simpler, safer, and more repeatable." data-project-role="Owned automation, infrastructure design, and deployment reliability across the project lifecycle." data-project-flow="Aligned code, infrastructure, and release processes through automation and consistent deployment patterns." data-project-challenges="Unified environment management while keeping security and auditability strong." data-project-results="Delivered a more stable platform with faster onboarding and better operational consistency." data-project-stack="Python,Terraform,Azure,IaC,Security,Automation" data-project-image="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+3">
                     <div class="project-image-wrapper">
                         <img src="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+3" alt="Project 3" class="project-image" loading="lazy">
                         <div class="project-overlay"></div>
@@ -1865,15 +1996,15 @@
                             <span class="tech-tag">Azure</span>
                             <span class="tech-tag">IaC</span>
                         </div>
-                        <a href="https://your-project-url.com" target="_blank" rel="noopener" class="demo-btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Live Demo</span>
-                        </a>
+                        <button type="button" class="demo-btn case-study-btn">
+                            <i class="fas fa-book-open"></i>
+                            <span>Case Study</span>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Project Card 4 (Optional) -->
-                <div class="project-card">
+                <div class="project-card" data-project-title="Your Project Title 4" data-project-summary="A backend-driven product focused on automation, performance, and dependable service delivery for busy teams." data-project-overview="Implemented a resilient system architecture that supported both growth and operational simplicity." data-project-role="Led backend automation, deployment planning, and infrastructure reliability improvements." data-project-flow="Introduced repeatable release flow using CI/CD, environment configuration, and monitoring practices." data-project-challenges="Managed complexity while keeping the platform lightweight, secure, and easy to maintain." data-project-results="Delivered a more efficient workflow with less friction and stronger reliability." data-project-stack="Node.js,MongoDB,Jenkins,Linux,CI/CD,Automation" data-project-image="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+4">
                     <div class="project-image-wrapper">
                         <img src="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+4" alt="Project 4" class="project-image" loading="lazy">
                         <div class="project-overlay"></div>
@@ -1895,15 +2026,15 @@
                             <span class="tech-tag">Jenkins</span>
                             <span class="tech-tag">Linux</span>
                         </div>
-                        <a href="https://your-project-url.com" target="_blank" rel="noopener" class="demo-btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Live Demo</span>
-                        </a>
+                        <button type="button" class="demo-btn case-study-btn">
+                            <i class="fas fa-book-open"></i>
+                            <span>Case Study</span>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Project Card 5 (Optional) -->
-                <div class="project-card">
+                <div class="project-card" data-project-title="Your Project Title 5" data-project-summary="An observability-focused initiative that helped teams monitor system health and respond faster to production issues." data-project-overview="Built a visibility layer that made troubleshooting easier and improved confidence in platform operations." data-project-role="Designed monitoring strategy, automation, and deployment playbooks to improve reliability." data-project-flow="Connected telemetry, dashboards, and alerting into a streamlined operational workflow." data-project-challenges="Turned scattered signals into a clear, actionable monitoring experience without increasing noise." data-project-results="Enabled faster incident response and stronger system visibility across the stack." data-project-stack="Ansible,Prometheus,Grafana,Observability,Automation,Monitoring" data-project-image="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+5">
                     <div class="project-image-wrapper">
                         <img src="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+5" alt="Project 5" class="project-image" loading="lazy">
                         <div class="project-overlay"></div>
@@ -1925,15 +2056,15 @@
                             <span class="tech-tag">Grafana</span>
                             <span class="tech-tag">Observability</span>
                         </div>
-                        <a href="https://your-project-url.com" target="_blank" rel="noopener" class="demo-btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Live Demo</span>
-                        </a>
+                        <button type="button" class="demo-btn case-study-btn">
+                            <i class="fas fa-book-open"></i>
+                            <span>Case Study</span>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Project Card 6 (Optional) -->
-                <div class="project-card">
+                <div class="project-card" data-project-title="Your Project Title 6" data-project-summary="A GitOps-oriented project focused on delivering consistent infrastructure and application updates through automation." data-project-overview="Created a deployment model that reduced manual intervention and improved consistency across environments." data-project-role="Responsible for automation design, release process standardization, and deployment reliability." data-project-flow="Used Git-based workflows, automated delivery, and controlled rollouts to simplify releases." data-project-challenges="Made platform changes safe and repeatable while keeping operations efficient." data-project-results="Improved release consistency and reduced deployment friction across the team." data-project-stack="Helm,ArgoCD,Kubernetes,GitOps,Automation,CI/CD" data-project-image="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+6">
                     <div class="project-image-wrapper">
                         <img src="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=Your+Project+6" alt="Project 6" class="project-image" loading="lazy">
                         <div class="project-overlay"></div>
@@ -1955,15 +2086,65 @@
                             <span class="tech-tag">Kube</span>
                             <span class="tech-tag">GitOps</span>
                         </div>
-                        <a href="https://your-project-url.com" target="_blank" rel="noopener" class="demo-btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Live Demo</span>
-                        </a>
+                        <button type="button" class="demo-btn case-study-btn">
+                            <i class="fas fa-book-open"></i>
+                            <span>Case Study</span>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </section>    
+    
+    <div class="case-study-modal" id="caseStudyModal" aria-hidden="true">
+        <div class="case-study-modal-backdrop" data-close-modal></div>
+        <div class="case-study-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="caseStudyTitle">
+            <button class="case-study-close" type="button" aria-label="Close case study" data-close-modal>
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="case-study-hero">
+                <p class="case-study-kicker">Case Study</p>
+                <h3 id="caseStudyTitle">Project Case Study</h3>
+                <p class="case-study-summary" id="caseStudySummary">A concise overview of the project, the challenge it solved, and the measurable outcome it delivered.</p>
+            </div>
+            <div class="case-study-flow">
+                <div class="case-study-step">
+                    <h4>Hero Section</h4>
+                    <p>Project context, goal, and the user need that inspired the build.</p>
+                </div>
+                <div class="case-study-step">
+                    <h4>Project Overview</h4>
+                    <p id="caseStudyOverview">A high-impact solution designed with reliability, speed, and business value in mind.</p>
+                </div>
+                <div class="case-study-step">
+                    <h4>Architecture Image</h4>
+                    <div class="case-study-architecture">
+                        <img id="caseStudyArchitectureImage" src="./req/img/crammm.com.png" alt="Architecture preview">
+                    </div>
+                </div>
+                <div class="case-study-step">
+                    <h4>My Role</h4>
+                    <p id="caseStudyRole">Led the delivery of the platform architecture, deployment strategy, and operational reliability.</p>
+                </div>
+                <div class="case-study-step">
+                    <h4>Deployment Flow</h4>
+                    <p id="caseStudyFlow">Introduced a repeatable deployment workflow using CI/CD practices, containerization, and secure releases.</p>
+                </div>
+                <div class="case-study-step">
+                    <h4>Challenges</h4>
+                    <p id="caseStudyChallenges">Balanced performance, scalability, and delivery speed while maintaining security and maintainability.</p>
+                </div>
+                <div class="case-study-step">
+                    <h4>Results</h4>
+                    <p id="caseStudyResults">Delivered a dependable product experience with faster deployment cycles and stronger operational confidence.</p>
+                </div>
+                <div class="case-study-step">
+                    <h4>Tech Stack</h4>
+                    <div class="case-study-stack" id="caseStudyStack"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- Education Section -->
     <section id="education" class="sonar-section">
@@ -2235,6 +2416,77 @@
       }
     });
   }
+})();
+</script>
+<script>
+(function(){
+  const modal = document.getElementById('caseStudyModal');
+  if(!modal) return;
+
+  const openButtons = document.querySelectorAll('.case-study-btn');
+  const closeButtons = document.querySelectorAll('[data-close-modal]');
+  const titleEl = document.getElementById('caseStudyTitle');
+  const summaryEl = document.getElementById('caseStudySummary');
+  const overviewEl = document.getElementById('caseStudyOverview');
+  const roleEl = document.getElementById('caseStudyRole');
+  const flowEl = document.getElementById('caseStudyFlow');
+  const challengesEl = document.getElementById('caseStudyChallenges');
+  const resultsEl = document.getElementById('caseStudyResults');
+  const stackEl = document.getElementById('caseStudyStack');
+  const imageEl = document.getElementById('caseStudyArchitectureImage');
+
+  function closeModal(){
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('case-study-open');
+  }
+
+  function openModal(button){
+    const card = button.closest('.project-card');
+    const title = card?.getAttribute('data-project-title') || card?.querySelector('.project-title')?.textContent?.trim() || 'Featured Project';
+    const summary = card?.getAttribute('data-project-summary') || card?.querySelector('.project-description')?.textContent?.trim() || 'A high-impact project built with cloud and DevOps practices.';
+    const overview = card?.getAttribute('data-project-overview') || `Delivered a modern experience focused on scalability, reliability, and measurable user impact for ${title}.`;
+    const role = card?.getAttribute('data-project-role') || `Owned the platform architecture, deployment strategy, automation, and operational safeguards for ${title}.`;
+    const flow = card?.getAttribute('data-project-flow') || `Used automated pipelines, container-based delivery, and environment controls to ensure predictable releases for ${title}.`;
+    const challenges = card?.getAttribute('data-project-challenges') || `Balanced performance, security, and maintainability while moving quickly from concept to production-ready delivery.`;
+    const results = card?.getAttribute('data-project-results') || `Improved deployment confidence, delivery speed, and long-term maintainability while supporting a strong user experience.`;
+    const stack = card?.getAttribute('data-project-stack') || 'AWS,Docker,CI/CD,IaC,Monitoring,Security';
+    const imageSrc = card?.getAttribute('data-project-image') || card?.querySelector('.project-image')?.getAttribute('src') || './req/img/crammm.com.png';
+
+    titleEl.textContent = `${title} • Case Study`;
+    summaryEl.textContent = summary;
+    overviewEl.textContent = overview;
+    roleEl.textContent = role;
+    flowEl.textContent = flow;
+    challengesEl.textContent = challenges;
+    resultsEl.textContent = results;
+
+    stackEl.innerHTML = '';
+    stack.split(',').filter(Boolean).forEach(item => {
+      const span = document.createElement('span');
+      span.textContent = item.trim();
+      stackEl.appendChild(span);
+    });
+
+    imageEl.src = imageSrc;
+    imageEl.alt = `${title} architecture preview`;
+
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('case-study-open');
+  }
+
+  openButtons.forEach(button => {
+    button.addEventListener('click', () => openModal(button));
+  });
+
+  closeButtons.forEach(button => {
+    button.addEventListener('click', closeModal);
+  });
+
+  document.addEventListener('keydown', function(event){
+    if(event.key === 'Escape') closeModal();
+  });
 })();
 </script>
 </body>
