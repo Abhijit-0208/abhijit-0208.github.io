@@ -1,20 +1,20 @@
 window.projectCaseStudies = [
   {
     id: 'crammm',
-    title: 'crammm.com',
-    summary: 'A student-first learning platform built around dependable releases, smart features, and a smoother study experience.',
-    description: 'AI-assisted study platform that helps learners revise faster and collaborate better with a smoother experience.',
-    tags: ['AI Study', 'Cloud Ops', 'DevSecOps', 'Scalable Delivery'],
+    title: 'AWS Cloud Infrastructure — Zero to Production',
+    summary: 'A 10-stack CloudFormation architecture that took an ed-tech platform from a local prototype to a scalable, multi-environment production system on AWS.',
+    description: 'Fully automated Infrastructure-as-Code build covering networking, container orchestration, caching, storage, and CI/CD for a platform with no prior production environment.',
+    tags: ['AWS', 'CloudFormation', 'ECS', 'Docker', 'DynamoDB', 'Lambda', 'Security', 'CodePipeline', 'CodeBuild', 'CodeDeploy', 'CloudWatch', 'S3', 'CloudFront', 'Route 53'],
     cardImage: './req/img/crammm.com.png',
-    caseStudyImage: 'https://via.placeholder.com/800x450/0f172a/38bdf8?text=crammm.com+Case+Study',
+    caseStudyImage: './req/img/architecture-diagram.png',
     caseStudy: {
-      overview: 'The case study focused on creating a dependable learning experience that felt fast, useful, and reliable from day one.',
-      architecture: 'The platform was structured around containerized services, managed cloud hosting, automated delivery, and observability for consistent performance.',
-      role: 'I shaped the cloud architecture, deployment backbone, and release reliability for the platform.',
-      flow: 'The delivery flow moved from code commit to secure deployment through containerized builds, automated testing, and observability.',
-      challenges: 'The team needed rapid iteration without sacrificing uptime, security, or maintainability as AI features expanded.',
-      results: 'The platform gained stronger release confidence, better reliability, and a more polished user experience for learners.',
-      stack: ['AWS', 'Docker', 'ECS', 'GitHub Actions', 'Terraform', 'Prometheus', 'Security']
+      overview: 'Cramm is an AI-powered exam-prep platform — a React frontend, a real-time WebSocket layer, document OCR processing, and an API backed by Claude AI — that had no home in production. I designed and built the entire AWS foundation from scratch: networking, container orchestration, caching, storage, and CI/CD, as fully automated Infrastructure-as-Code, repeatable across dev, staging, and production with a single parameter change.',
+      architecture: 'User traffic hits CloudFront, which serves the React frontend out of S3. API and WebSocket requests route through an Application Load Balancer to ECS services running on auto-scaling EC2 instances. Application data lives in DynamoDB, hot data is cached in Valkey, and shared files sit on EFS across every container. Docker images build in CodeBuild, land in ECR, and roll out to ECS automatically whenever code merges to GitHub.',
+      role: 'Cloud Infrastructure Engineer. Designed the full AWS architecture across 10 interdependent CloudFormation stacks — VPC, IAM, EFS, ElastiCache, S3, ECR, DynamoDB, ECS cluster, ECS services, and SSM — and defined the deployment order and dependency chain between them. Owned the infrastructure end-to-end, from network design through to the CI/CD pipeline that ships containers to production.',
+      flow: 'VPC & IAM deploy first → EFS, ElastiCache, S3, ECR deploy in parallel → DynamoDB (43+ tables) provisions via a nested stack → ECS cluster & ALB come online → API and Socket services deploy behind the load balancer → SSM wires up secrets and config. Ongoing: GitHub push → CodePipeline builds via CodeBuild → image lands in ECR → ECS rolls out with zero downtime.',
+      challenges: 'Stateless ECS tasks scale independently, so real-time WebSocket sessions couldn\'t live in memory — connection tracking moved into Valkey so any task could serve any client. Getting access patterns and GSIs right across 43+ DynamoDB tables before launch mattered, to avoid expensive re-modeling later. Sequencing 19 interdependent CloudFormation stacks so later stacks could reliably consume earlier outputs without circular dependencies was its own puzzle, on top of balancing cost against resilience when sizing instances and deciding where Multi-AZ redundancy was actually worth it.',
+      results: 'Replaced a nonexistent deployment process with a fully automated, repeatable one — infrastructure that spins up from code in under an hour (~50 min) and ships new releases with zero manual intervention (~2 min rollout, zero downtime) across 3 environments.',
+      stack: ['AWS', 'CloudFormation', 'ECS', 'Docker', 'DynamoDB', 'Lambda', 'Security', 'CodePipeline', 'CodeBuild', 'CodeDeploy', 'CloudWatch', 'S3', 'CloudFront', 'Route 53', 'ElastiCache (Valkey)', 'EFS', 'SSM', 'secrets management']
     }
   },
   {
