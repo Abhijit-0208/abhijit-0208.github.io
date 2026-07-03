@@ -35,6 +35,7 @@ window.projectCaseStudies = [
       stack: ['GitHub', 'Git', 'Jenkins', 'Docker', 'AWS ECR', 'Nginx', 'CI/CD', 'Aws EC2']
     }
   },
+  /*
   {
     id: 'secure-release-gateway',
     title: 'Secure Release Gateway',
@@ -107,4 +108,5 @@ window.projectCaseStudies = [
       stack: ['Helm', 'ArgoCD', 'Kubernetes', 'GitOps']
     }
   }
+  */
 ];
