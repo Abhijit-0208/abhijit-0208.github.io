@@ -24,7 +24,7 @@ window.projectCaseStudies = [
     description: 'End-to-end CI/CD pipeline handling automated builds, container registry pushes, and reverse-proxy deployment for a company with no prior DevOps setup.',
     tags: ['CI/CD', 'Docker', 'Jenkins', 'AWS', 'Nginx', 'Git', 'GitHub'],
     cardImage: './req/img/devops_cicd_pipeline_architecture.png',
-    caseStudyImage: './req/img/devops_cicd_pipeline_architecture.png',
+    caseStudyImage: './req/img/crammm-ci-cd-first.png',
     caseStudy: {
       overview: 'Before this project, the company had no centralized codebase and no automated deployment process — everything was manual. I built a full CI/CD pipeline from scratch: centralized version control, automated builds, containerized deployments, and a reverse proxy in front — all designed, built, and maintained solo.',
       architecture: 'Code pushed to GitHub triggers Jenkins, which builds the frontend and backend independently and pushes both as Docker images to AWS ECR. Containers are deployed from those images and sit behind Nginx, which handles reverse-proxy routing to a single entry point.',
