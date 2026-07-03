@@ -64,14 +64,29 @@
     },
 
     addWelcomeIfEmpty(){
-      if (!this.chatMessages.querySelector('.chat-message')){
-        this.botMessage("👋 Hi! I'm Abhijit's Portfolio Assistant. I only answer questions about his portfolio, projects, experience and contact info.");
-        this.showQuickSuggestions();
+      if (!this.chatMessages) return;
+      // If the page already includes a welcome block or any chat message, don't inject a duplicate welcome.
+      if (this.chatMessages.querySelector('.welcome-message') || this.chatMessages.querySelector('.chat-message') || this.chatMessages.children.length > 0){
+        // ensure persistent suggestions exist if missing
+        if (!this.chatMessages.querySelector('.quick-suggestions.persistent')) this.showQuickSuggestions();
+        return;
       }
+
+      this.botMessage("👋 Hi! I'm Abhijit's Portfolio Assistant. I only answer questions about his portfolio, projects, experience and contact info.");
+      this.showQuickSuggestions();
     },
 
     showQuickSuggestions(){
-      const suggestions = ['About Me','Skills','Experience','Projects','Resume','GitHub','LinkedIn','Contact / Hire'];
+      const suggestions = [
+        'Tell me about yourself',
+        'What are your skills?',
+        'Show your projects',
+        'Explain <project-name> project',
+        'Tell me about your CI/CD pipeline',
+        'Show your <project-name> project',
+        'Can I download your resume?',
+        'How can I contact you?'
+      ];
       const wrapper = createEl('div',{class:'quick-suggestions persistent'});
       suggestions.forEach(s=>{
         const b = createEl('button',{class:'suggestion-chip', type:'button', 'data-text': s}, s);
@@ -126,97 +141,126 @@
 
     respondTo(text){
       const t = text.toLowerCase();
-      // direct keyword answers
-      if (/resume|cv/.test(t)){
+
+      // Normalize common synonyms to topics
+      const topicMap = {
+        about: ['about','who are you','tell me about yourself','about me'],
+        skills: ['skill','skills','technologies','tech stack','what technologies do you know','what are your skills'],
+        projects: ['project','projects','show your projects','show your <project-name> project','explain <project-name> project','show your <project-name> project'],
+        resume: ['resume','cv','download resume','can i download your resume','download my resume'],
+        github: ['github'],
+        linkedin: ['linkedin'],
+        contact: ['contact','hire','i want to hire you','contact you','let\'s work together','freelance','job opportunity','project','how can i contact you']
+      };
+
+      function matchTopic(text){
+        for (const [topic, phrases] of Object.entries(topicMap)){
+          for (const p of phrases){
+            if (p.includes('<project-name>')){
+              // user asked about a specific project — treat as 'projects' topic
+              if (/project/i.test(text)) return topic;
+              continue;
+            }
+            const pattern = p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+            const re = new RegExp(pattern,'i');
+            if (re.test(text)) return topic;
+          }
+        }
+        return null;
+      }
+
+      const topic = matchTopic(text);
+      if (topic === 'resume'){
         const url = DATA.resumeUrl || '#';
-        const html = `<p>You can download the resume here:</p><p><a class="btn btn-primary" href="${url}" download>Download Resume</a></p>`;
+        const html = `<p>You can download the resume here:</p><p><a class="btn btn-primary" href="${url}" target="_blank" rel="noopener">Open / Download Resume</a></p>`;
         return this.botMessage(html);
       }
-      if (/github/.test(t)){
+      if (topic === 'github'){
         const html = `GitHub: <a href="${DATA.githubUrl}" target="_blank" rel="noopener">${DATA.githubUrl}</a>`;
         return this.botMessage(html);
       }
-      if (/linkedin/.test(t)){
+      if (topic === 'linkedin'){
         const html = `LinkedIn: <a href="${DATA.linkedinUrl}" target="_blank" rel="noopener">${DATA.linkedinUrl}</a>`;
         return this.botMessage(html);
       }
-      if (/(contact|hire|work with|get in touch)/.test(t)){
+      if (topic === 'contact'){
         return this.startContactFlow();
       }
-      if (/(about|who are you|about me)/.test(t)){
+      if (topic === 'about'){
         return this.botMessage(`<p>${escapeHtml(DATA.about || 'No about info provided.')}</p>`);
       }
-      if (/(skill|skills|technologies)/.test(t)){
+      if (topic === 'skills'){
         const list = (DATA.skills||[]).map(s=>`<li>${escapeHtml(s)}</li>`).join('');
         return this.botMessage(`<p><strong>Key skills:</strong></p><ul>${list}</ul>`);
       }
-      if (/(experience|work|role|company)/.test(t)){
-        const ex = DATA.experience || [];
-        if (!ex.length) return this.botMessage('No experience data available.');
-        const html = ex.map(e=>`<p><strong>${escapeHtml(e.role)}</strong> — ${escapeHtml(e.company)} (${escapeHtml(e.period)})<br>${escapeHtml(e.summary)}</p>`).join('');
-        return this.botMessage(html);
-      }
-      if (/(project|projects)/.test(t)){
+      if (topic === 'projects'){
         const ps = DATA.projects || [];
         if (!ps.length) return this.botMessage('No projects listed.');
         const html = ps.map(p=>`<p><strong>${escapeHtml(p.name)}</strong>: ${escapeHtml(p.description)} ${p.link?`<br><a href="${p.link}" target="_blank">View project</a>`:''}</p>`).join('');
         return this.botMessage(html);
       }
 
-      // If message asks specifically about resume, GitHub, LinkedIn handled above.
-
-      // If question seems portfolio related but not matched, try keyword matching for topics
-      const topics = ['about','skills','experience','projects','resume','github','linkedin','contact'];
-      for (const topic of topics){ if (t.includes(topic)) return this.respondTo(topic); }
-
-      // Otherwise default politely
       return this.botMessage("Sorry — I only answer questions about Abhijit's portfolio, projects, experience and contact information. Try one of the suggested questions.");
     },
 
     startContactFlow(){
       this.contactFlow = { step: 0, data: {} };
-      const html = `
-        <p>I'd be happy to connect. Please provide the following details.</p>
-        <div class="contact-form">
-          <label>Name</label><input id="cf-name" placeholder="Your name" />
-          <label>Email</label><input id="cf-email" placeholder="you@company.com" />
-          <label>Company <small>(optional)</small></label><input id="cf-company" placeholder="Company name" />
-          <label>Project requirements</label><textarea id="cf-req" placeholder="Describe your project"></textarea>
-          <div style="margin-top:8px;"><button id="cf-send" class="btn btn-primary">Review & Continue</button></div>
-        </div>`;
-      this.botMessage(html);
-      // attach handler
-      setTimeout(()=>{
-        const btn = qs('#cf-send');
-        if (btn) btn.addEventListener('click', ()=>this.finishContactForm());
-      }, 50);
+      this.botMessage("Great! I'd love to hear about your project.");
+      this.botMessage('What is your name?');
     },
 
-    finishContactForm(){
-      const name = qs('#cf-name')?.value?.trim();
-      const email = qs('#cf-email')?.value?.trim();
-      const company = qs('#cf-company')?.value?.trim();
-      const req = qs('#cf-req')?.value?.trim();
-      if (!name || !email || !req) return alert('Please provide name, email and project requirements.');
-      this.contactFlow = { step: 1, data: { name, email, company, requirements: req } };
-      const summary = `
-        <p><strong>Summary</strong></p>
-        <p>Name: ${escapeHtml(name)}<br>Email: ${escapeHtml(email)}<br>Company: ${escapeHtml(company||'-')}<br>Requirements: ${escapeHtml(req)}</p>
-        <p><button id="cf-submit" class="btn btn-success">Send Message</button></p>`;
-      this.botMessage(summary);
-      setTimeout(()=>{ const sb = qs('#cf-submit'); if (sb) sb.addEventListener('click', ()=>this.sendContact()) }, 50);
-    },
-
-    sendContact(){
-      if (!this.contactFlow || !this.contactFlow.data) return;
-      console.log('Contact request from portfolio chatbot:', this.contactFlow.data);
-      this.botMessage('Thanks — your message was logged locally (check console). I will follow up by email if contact details are valid.');
-      this.contactFlow = null;
+    // validate simple email
+    isValidEmail(email){
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     },
 
     handleContactFlowInput(msg){
-      // form-driven flow handled in form fields, so ignore plain messages
-      this.botMessage('Please use the contact form fields shown to submit details.');
+      const step = this.contactFlow?.step ?? 0;
+      const trimmed = msg?.trim();
+      if (step === 0){
+        // collect name
+        this.contactFlow.data.name = trimmed;
+        this.contactFlow.step = 1;
+        this.botMessage('Thanks. What is your email address?');
+        return;
+      }
+      if (step === 1){
+        if (!this.isValidEmail(trimmed)){
+          this.botMessage('That email looks invalid. Please provide a valid email address.');
+          return;
+        }
+        this.contactFlow.data.email = trimmed;
+        this.contactFlow.step = 2;
+        this.botMessage('Company (optional) — or type "skip" to skip.');
+        return;
+      }
+      if (step === 2){
+        if (trimmed.toLowerCase() === 'skip'){
+          this.contactFlow.data.company = '';
+        } else {
+          this.contactFlow.data.company = trimmed;
+        }
+        this.contactFlow.step = 3;
+        this.botMessage('Please describe your project requirements.');
+        return;
+      }
+      if (step === 3){
+        this.contactFlow.data.requirements = trimmed;
+        this.contactFlow.step = 4;
+        // show summary and send button
+        const d = this.contactFlow.data;
+        const html = `\n          <p><strong>Thank you! Here's your information:</strong></p>\n          <p>Name: ${escapeHtml(d.name)}<br>Email: ${escapeHtml(d.email)}<br>Company: ${escapeHtml(d.company||'-')}<br>Project: ${escapeHtml(d.requirements)}</p>\n          <p><button id="cf-submit" class="btn btn-success">Send Message</button></p>`;
+        this.botMessage(html);
+        setTimeout(()=>{ const sb = qs('#cf-submit'); if (sb) sb.addEventListener('click', ()=>this.sendContact(this.contactFlow.data)); }, 50);
+        return;
+      }
+    },
+
+    // modular send function - currently logs to console, can be swapped for real implementation
+    sendContact(data){
+      console.log('Portfolio chatbot - sendContact called with:', data);
+      this.botMessage('Thanks — your message was logged locally (check console). I will follow up by email if contact details are valid.');
+      this.contactFlow = null;
     },
 
     scrollToBottom(){ if (this.chatMessages) this.chatMessages.scrollTop = this.chatMessages.scrollHeight; }
