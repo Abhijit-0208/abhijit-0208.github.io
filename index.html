@@ -136,6 +136,7 @@
     }
 
     .contact-form-card {
+        position: relative;
         background: rgba(15, 23, 42, 0.88);
         border: 1px solid rgba(59, 130, 246, 0.16);
         border-radius: 28px;
@@ -143,6 +144,42 @@
         padding: 36px;
         margin-top: 40px;
         backdrop-filter: blur(18px);
+    }
+
+    .contact-toast {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        z-index: 5;
+        max-width: 320px;
+        padding: 14px 18px;
+        border-radius: 18px;
+        background: rgba(59, 130, 246, 0.14);
+        border: 1px solid rgba(59, 130, 246, 0.28);
+        color: #e0f2fe;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 22px 48px rgba(6, 12, 34, 0.24);
+        opacity: 0;
+        transform: translateY(-12px);
+        transition: opacity 0.24s ease, transform 0.24s ease;
+        pointer-events: none;
+    }
+
+    .contact-toast.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .contact-toast.success {
+        background: rgba(34, 197, 94, 0.14);
+        border-color: rgba(34, 197, 94, 0.28);
+        color: #dcfce7;
+    }
+
+    .contact-toast.error {
+        background: rgba(248, 113, 113, 0.14);
+        border-color: rgba(248, 113, 113, 0.28);
+        color: #fee2e2;
     }
 
     .contact-form-body {
@@ -264,8 +301,8 @@
     
     .projects-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 32px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 28px;
         margin-top: 60px;
     }
     
@@ -279,6 +316,7 @@
         flex-direction: column;
         height: 100%;
         backdrop-filter: blur(10px);
+        max-width: 100%;
     }
     
     .project-card:hover {
@@ -2154,6 +2192,7 @@
                             <button type="submit" id="contactSubmit" class="btn-sonar-primary">Send Message</button>
                             <div class="contact-status" id="contactStatus" aria-live="polite"></div>
                         </div>
+                        <div id="contactToast" class="contact-toast" role="status" aria-live="polite"></div>
                     </form>
                 </div>
             </div>
@@ -2286,6 +2325,7 @@
     (function(){
       const form = document.getElementById('contactForm');
       const statusEl = document.getElementById('contactStatus');
+      const toastEl = document.getElementById('contactToast');
       const submitBtn = document.getElementById('contactSubmit');
 
       const emailConfig = {
@@ -2297,6 +2337,17 @@
       function updateStatus(message, type) {
         statusEl.textContent = message;
         statusEl.className = 'contact-status' + (type ? ' ' + type : '');
+      }
+
+      function showToast(message, type = 'success') {
+        if (!toastEl) return;
+        toastEl.textContent = message;
+        toastEl.classList.remove('success', 'error');
+        toastEl.classList.add(type, 'visible');
+        clearTimeout(toastEl.hideTimeout);
+        toastEl.hideTimeout = setTimeout(() => {
+          toastEl.classList.remove('visible');
+        }, 4200);
       }
 
       function setFieldError(fieldName, message) {
@@ -2396,10 +2447,12 @@
           .then(function() {
             updateStatus('Message sent successfully! I’ll get back to you soon.', 'success');
             form.reset();
+            showToast('Your message was sent. Thank you!', 'success');
           })
           .catch(function(error) {
             console.error('EmailJS send error:', error);
             updateStatus('Sending failed. Please try again in a few minutes.', 'error');
+            showToast('Failed to send your message. Please try again.', 'error');
           })
           .finally(function() {
             setLoading(false);
