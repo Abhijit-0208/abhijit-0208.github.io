@@ -134,6 +134,125 @@
         transform: scale(1.05) !important;
         box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
     }
+
+    .contact-form-card {
+        background: rgba(15, 23, 42, 0.88);
+        border: 1px solid rgba(59, 130, 246, 0.16);
+        border-radius: 28px;
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.24);
+        padding: 36px;
+        margin-top: 40px;
+        backdrop-filter: blur(18px);
+    }
+
+    .contact-form-body {
+        display: grid;
+        gap: 28px;
+    }
+
+    .contact-form-intro {
+        max-width: 680px;
+        color: rgba(255, 255, 255, 0.75);
+        line-height: 1.8;
+        margin: 0;
+    }
+
+    .contact-form {
+        display: grid;
+        gap: 20px;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .form-field {
+        display: grid;
+        gap: 8px;
+    }
+
+    .form-field label {
+        font-size: 14px;
+        color: rgba(191, 219, 254, 0.95);
+        letter-spacing: 0.01em;
+        font-weight: 600;
+    }
+
+    .form-field input,
+    .form-field textarea {
+        width: 100%;
+        min-height: 52px;
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+        font-size: 15px;
+        line-height: 1.6;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        outline: none;
+    }
+
+    .form-field textarea {
+        min-height: 160px;
+        resize: vertical;
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+        color: rgba(255, 255, 255, 0.55);
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+        border-color: rgba(59, 130, 246, 0.65);
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .field-error {
+        color: #fb7185;
+        font-size: 13px;
+        min-height: 18px;
+    }
+
+    .form-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .contact-status {
+        min-height: 22px;
+        font-size: 0.95rem;
+        color: rgba(165, 180, 252, 0.95);
+    }
+
+    .contact-status.success {
+        color: #86efac;
+    }
+
+    .contact-status.error {
+        color: #fda4af;
+    }
+
+    .contact-form-card .btn-sonar-primary {
+        min-width: 190px;
+    }
+
+    .contact-form-card .btn-sonar-primary[disabled] {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
     
     /* ===== Featured Projects Section ===== */
     .sonar-projects {
@@ -1999,50 +2118,43 @@
                     <span class="gradient-text">something amazing?</span>
                 </h2>
                 <p class="section-subtitle">
-                    Let's discuss how my Cloud & DevOps expertise can<br>
-                    accelerate your next project.
+                    Share your project details or question below and I’ll respond quickly.
                 </p>
             </div>
             
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="contact-content">
-                        <h3>Email</h3>
-                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dashabhijit02@gmail.com"
-                                    target="_blank"
-                                    class="contact-action">
-                            <span>Send Email</span>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fab fa-linkedin-in"></i>
-                    </div>
-                    <div class="contact-content">
-                        <h3>LinkedIn</h3>
-                        <a href="https://www.linkedin.com/in/abhijit-dash-827561204" target="_blank" class="contact-action">
-                            <i class="fab fa-linkedin-in"></i>
-                            <span>Connect on LinkedIn</span>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="contact-content">
-                        <h3>Location</h3>
-                        <a href="https://www.google.com/maps?q=Bhubaneswar,Odisha,India" target="_blank" class="contact-action">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>View on Map</span>
-                        </a>
-                    </div>
+            <div class="contact-form-card">
+                <div class="contact-form-body">
+                    <p class="contact-form-intro">
+                        Use the form to send a direct message with your name, email, subject, and a short description of what you need.
+                    </p>
+                    <form id="contactForm" class="contact-form" novalidate>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="fullName">Full Name</label>
+                                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                                <span class="field-error" id="error-fullName"></span>
+                            </div>
+                            <div class="form-field">
+                                <label for="emailAddress">Email Address</label>
+                                <input type="email" id="emailAddress" name="emailAddress" placeholder="Enter your email address" required>
+                                <span class="field-error" id="error-emailAddress"></span>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" placeholder="Subject of your message" required>
+                            <span class="field-error" id="error-subject"></span>
+                        </div>
+                        <div class="form-field">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Write your message here" rows="6" required></textarea>
+                            <span class="field-error" id="error-message"></span>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" id="contactSubmit" class="btn-sonar-primary">Send Message</button>
+                            <div class="contact-status" id="contactStatus" aria-live="polite"></div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -2168,6 +2280,133 @@
     <script src="req/js/projects-data.js"></script>
     <script src="req/js/portfolioData.js"></script>
     <script src="req/js/ai-portfolio-chatbot.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+    // ===== Contact Form EmailJS Integration =====
+    (function(){
+      const form = document.getElementById('contactForm');
+      const statusEl = document.getElementById('contactStatus');
+      const submitBtn = document.getElementById('contactSubmit');
+
+      const emailConfig = {
+        publicKey: 'iH51Mj8inr2VFIuBL',
+        serviceId: 'service_ix7cws8',
+        templateId: 'template_rc4qi25'
+      };
+
+      function updateStatus(message, type) {
+        statusEl.textContent = message;
+        statusEl.className = 'contact-status' + (type ? ' ' + type : '');
+      }
+
+      function setFieldError(fieldName, message) {
+        const errorEl = document.getElementById('error-' + fieldName);
+        if (errorEl) {
+          errorEl.textContent = message;
+        }
+      }
+
+      function clearErrors() {
+        ['fullName', 'emailAddress', 'subject', 'message'].forEach(name => {
+          const errorEl = document.getElementById('error-' + name);
+          if (errorEl) errorEl.textContent = '';
+        });
+      }
+
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      function setLoading(isLoading) {
+        if (submitBtn) {
+          submitBtn.disabled = isLoading;
+          submitBtn.textContent = isLoading ? 'Sending...' : 'Send Message';
+          if (isLoading) {
+            submitBtn.setAttribute('aria-busy', 'true');
+          } else {
+            submitBtn.removeAttribute('aria-busy');
+          }
+        }
+      }
+
+      if (window.emailjs && emailConfig.publicKey) {
+        emailjs.init(emailConfig.publicKey);
+      }
+
+      if (!form) return;
+
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        clearErrors();
+        updateStatus('', '');
+
+        const formData = {
+          fullName: form.fullName.value.trim(),
+          emailAddress: form.emailAddress.value.trim(),
+          subject: form.subject.value.trim(),
+          message: form.message.value.trim()
+        };
+
+        let isValid = true;
+
+        if (!formData.fullName) {
+          setFieldError('fullName', 'Full name is required.');
+          isValid = false;
+        }
+
+        if (!formData.emailAddress) {
+          setFieldError('emailAddress', 'Email address is required.');
+          isValid = false;
+        } else if (!validateEmail(formData.emailAddress)) {
+          setFieldError('emailAddress', 'Enter a valid email address.');
+          isValid = false;
+        }
+
+        if (!formData.subject) {
+          setFieldError('subject', 'Subject is required.');
+          isValid = false;
+        }
+
+        if (!formData.message) {
+          setFieldError('message', 'Message is required.');
+          isValid = false;
+        }
+
+        if (!isValid) {
+          updateStatus('Please fix the fields highlighted above.', 'error');
+          return;
+        }
+
+        if (!window.emailjs) {
+          updateStatus('Email service is unavailable. Please try again later.', 'error');
+          return;
+        }
+
+        setLoading(true);
+
+        const templateParams = {
+          from_name: formData.fullName,
+          from_email: formData.emailAddress,
+          subject: formData.subject,
+          message: formData.message,
+          date_time: new Date().toLocaleString()
+        };
+
+        emailjs.send(emailConfig.serviceId, emailConfig.templateId, templateParams)
+          .then(function() {
+            updateStatus('Message sent successfully! I’ll get back to you soon.', 'success');
+            form.reset();
+          })
+          .catch(function(error) {
+            console.error('EmailJS send error:', error);
+            updateStatus('Sending failed. Please try again in a few minutes.', 'error');
+          })
+          .finally(function() {
+            setLoading(false);
+          });
+      });
+    })();
+    </script>
     <script>
     // ===== Mobile Nav Toggle & Active Link Highlight =====
     (function(){
